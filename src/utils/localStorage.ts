@@ -6,9 +6,13 @@ export const getAttractionsFromLocalStorage = (): Attraction[] => {
   const data = localStorage.getItem("attractions");
   if (data) {
     try {
-      return JSON.parse(data);
-    } catch (error) {
-      console.error("Ошибка при парсинге данных из localStorage:", error);
+      const parsedData = JSON.parse(data);
+      if (Array.isArray(parsedData)) {
+        return parsedData;
+      } else {
+        return [];
+      }
+    } catch {
       return [];
     }
   }

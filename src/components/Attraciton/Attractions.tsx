@@ -35,16 +35,16 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
     null
   );
 
-  // Загружаем аттракции из localStorage при монтировании компонента
   useEffect(() => {
     const storedData = getAttractionsFromLocalStorage();
-    setData(storedData);
+    if (storedData.length > 0) {
+      setData(storedData);
+    }
   }, []);
 
-  // Сохраняем аттракции в localStorage каждый раз при изменении данных
   useEffect(() => {
     if (data.length === 0) {
-      localStorage.removeItem("attractions"); // Очищаем localStorage, если данных нет
+      localStorage.removeItem("attractions");
     } else {
       saveAttractionsToLocalStorage(data);
     }
@@ -70,7 +70,6 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
     const updatedData = data.filter((item) => item.id !== id);
     setData(updatedData);
 
-    // Если данных больше нет, очищаем localStorage
     if (updatedData.length === 0) {
       localStorage.removeItem("attractions");
     } else {
