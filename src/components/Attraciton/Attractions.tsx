@@ -30,7 +30,6 @@ type AttractionsProps = {
 
 const Attractions = ({ isAdmin }: AttractionsProps) => {
   const [data, setData] = useState<Attraction[]>([]);
-
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingAttraction, setEditingAttraction] = useState<Attraction | null>(
     null
@@ -199,14 +198,12 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
 
       <Table data={data.length > 0 ? data : []} columns={columns} />
 
-      {isFormOpen && (
-        <AttractionForm
-          open={isFormOpen}
-          onClose={() => setIsFormOpen(false)}
-          onSubmit={handleSubmit}
-          initialData={editingAttraction || undefined}
-        />
-      )}
+      <AttractionForm
+        open={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        onSubmit={handleSubmit}
+        initialData={editingAttraction || undefined}
+      />
     </>
   );
 };
