@@ -1,0 +1,24 @@
+.modalContent {
+  padding: 20px;
+  width: 500px;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.label {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.imagePreview {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 4px;
+  margin-top: 8px;
+}

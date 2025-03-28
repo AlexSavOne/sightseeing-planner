@@ -1,0 +1,44 @@
+.statsContainer {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.card {
+  padding: 16px;
+  text-align: center;
+  min-width: 120px;
+}
+
+.statLabel {
+  font-size: 14px;
+  color: #888;
+}
+
+.statValue {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.addButton {
+  margin-bottom: 20px;
+}
+
+.imageWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.image {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
