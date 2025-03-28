@@ -1,8 +1,14 @@
+// src/components/Attraciton/Attractions.tsx
+
 import { Table, Button, Card } from "@gravity-ui/uikit";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AttractionForm } from "../AttractionForm/AttractionForm";
 import { generateMapLink } from "../../utils/mapLinks";
+import {
+  saveAttractionsToLocalStorage,
+  getAttractionsFromLocalStorage,
+} from "../../utils/localStorage";
 import styles from "./Attractions.module.css";
 
 export type Attraction = {
@@ -22,38 +28,27 @@ type AttractionsProps = {
   isAdmin: boolean;
 };
 
-const initialData: Attraction[] = [
-  {
-    id: uuidv4(),
-    name: "Эйфелева башня",
-    description: "Знаменитая достопримечательность в Париже.",
-    dateAdded: new Date().toISOString().split("T")[0],
-    rating: 5,
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg/800px-Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg",
-    location: "Париж, Франция",
-    latitude: 48.8584,
-    longitude: 2.2945,
-    status: "в планах",
-  },
-  {
-    id: uuidv4(),
-    name: "Колизей",
-    description: "Древнеримский амфитеатр.",
-    dateAdded: new Date().toISOString().split("T")[0],
-    rating: 4,
-    location: "Рим, Италия",
-    latitude: 41.8902,
-    longitude: 12.4924,
-    status: "осмотрена",
-  },
-];
-
 const Attractions = ({ isAdmin }: AttractionsProps) => {
-  const [data, setData] = useState<Attraction[]>(initialData);
+  const [data, setData] = useState<Attraction[]>([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingAttraction, setEditingAttraction] = useState<Attraction | null>(
     null
   );
+
+  // Загружаем аттракции из localStorage при монтировании компонента
+  useEffect(() => {
+    const storedData = getAttractionsFromLocalStorage();
+    setData(storedData);
+  }, []);
+
+  // Сохраняем аттракции в localStorage каждый раз при изменении данных
+  useEffect(() => {
+    if (data.length === 0) {
+      localStorage.removeItem("attractions"); // Очищаем localStorage, если данных нет
+    } else {
+      saveAttractionsToLocalStorage(data);
+    }
+  }, [data]);
 
   const stats = {
     total: data.length,
@@ -72,7 +67,15 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
   };
 
   const handleDelete = (id: string) => {
-    setData(data.filter((item) => item.id !== id));
+    const updatedData = data.filter((item) => item.id !== id);
+    setData(updatedData);
+
+    // Если данных больше нет, очищаем localStorage
+    if (updatedData.length === 0) {
+      localStorage.removeItem("attractions");
+    } else {
+      saveAttractionsToLocalStorage(updatedData);
+    }
   };
 
   const toggleStatus = (id: string) => {
@@ -91,25 +94,13 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
   const handleSubmit = (
     newAttraction: Omit<Attraction, "id" | "dateAdded">
   ) => {
-    if (editingAttraction) {
-      setData(
-        data.map((item) =>
-          item.id === editingAttraction.id
-            ? { ...item, ...newAttraction }
-            : item
-        )
-      );
-    } else {
-      setData([
-        ...data,
-        {
-          ...newAttraction,
-          id: uuidv4(),
-          dateAdded: new Date().toISOString().split("T")[0],
-          status: "в планах",
-        },
-      ]);
-    }
+    const attraction: Attraction = {
+      ...newAttraction,
+      id: uuidv4(),
+      dateAdded: new Date().toISOString().split("T")[0],
+      status: "в планах",
+    };
+    setData((prevData) => [...prevData, attraction]);
     setIsFormOpen(false);
   };
 
@@ -205,7 +196,7 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
         </Button>
       )}
 
-      <Table data={data} columns={columns} />
+      <Table data={data.length > 0 ? data : []} columns={columns} />
 
       <AttractionForm
         open={isFormOpen}
