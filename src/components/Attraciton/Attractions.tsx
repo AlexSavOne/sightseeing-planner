@@ -1,6 +1,6 @@
-// src/components/Attraciton/Attractions.tsx
+// src\components\Attraciton\Attractions.tsx
 
-import { Table, Button, Card } from "@gravity-ui/uikit";
+import { Table, Button, Card, TextInput } from "@gravity-ui/uikit";
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AttractionForm } from "../AttractionForm/AttractionForm";
@@ -34,6 +34,8 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
   const [editingAttraction, setEditingAttraction] = useState<Attraction | null>(
     null
   );
+  const [searchQuery, setSearchQuery] = useState(""); // Новое состояние для поиска
+  const [hideVisited, setHideVisited] = useState(false); // Состояние для скрытия осмотренных достопримечательностей
 
   useEffect(() => {
     const storedData = getAttractionsFromLocalStorage();
@@ -62,7 +64,6 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
   };
 
   const handleEdit = (attraction: Attraction) => {
-    console.log("Редактируемая достопримечательность:", attraction);
     setEditingAttraction(attraction);
     setIsFormOpen(true);
   };
@@ -95,7 +96,6 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
     newAttraction: Omit<Attraction, "id" | "dateAdded">
   ) => {
     if (editingAttraction) {
-      console.log("Обновляем достопримечательность:", newAttraction);
       setData((prevData) =>
         prevData.map((item) =>
           item.id === editingAttraction.id
@@ -104,7 +104,6 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
         )
       );
     } else {
-      console.log("Добавляем новую достопримечательность:", newAttraction);
       const attraction: Attraction = {
         ...newAttraction,
         id: uuidv4(),
@@ -117,7 +116,15 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
     setEditingAttraction(null);
   };
 
-  console.log("Текущее состояние editingAttraction:", editingAttraction);
+  const filteredData = data.filter((attraction) => {
+    return (
+      (!hideVisited || attraction.status !== "осмотрена") && // Фильтрация скрытия осмотренных
+      (attraction.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        attraction.description
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()))
+    );
+  });
 
   const columns = [
     {
@@ -205,13 +212,35 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
         </Card>
       </div>
 
+      <div className={styles.searchContainer}>
+        <label htmlFor="searchInput" className={styles.searchLabel}>
+          Поиск по названию или описанию
+        </label>
+        <TextInput
+          id="searchInput"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Введите название или описание"
+          className={styles.searchInput}
+        />
+      </div>
+
       {isAdmin && (
         <Button view="action" onClick={handleAdd} className={styles.addButton}>
           Добавить достопримечательность
         </Button>
       )}
 
-      <Table data={data.length > 0 ? data : []} columns={columns} />
+      {/* Кнопка для скрытия/показа осмотренных достопримечательностей */}
+      <Button
+        onClick={() => setHideVisited(!hideVisited)}
+        view="action"
+        className={styles.hideVisitedButton}
+      >
+        {hideVisited ? "Показать осмотренные" : "Скрыть осмотренные"}
+      </Button>
+
+      <Table data={filteredData} columns={columns} />
 
       <AttractionForm
         open={isFormOpen}
