@@ -1,7 +1,7 @@
-// src\components\AttractionForm.tsx
+// src/components/AttractionForm.tsx
 
+import { useEffect, useState } from "react";
 import { Button, Modal, Select, TextArea, TextInput } from "@gravity-ui/uikit";
-import { useState } from "react";
 import { Attraction } from "../Attraciton/Attractions";
 import styles from "./AttractionForm.module.css";
 
@@ -18,19 +18,28 @@ export const AttractionForm = ({
   onSubmit,
   initialData,
 }: AttractionFormProps) => {
-  const [name, setName] = useState(initialData?.name || "");
-  const [description, setDescription] = useState(
-    initialData?.description || ""
-  );
-  const [rating, setRating] = useState(initialData?.rating?.toString() || "3");
-  const [location, setLocation] = useState(initialData?.location || "");
-  const [latitude, setLatitude] = useState(
-    initialData?.latitude?.toString() || ""
-  );
-  const [longitude, setLongitude] = useState(
-    initialData?.longitude?.toString() || ""
-  );
-  const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || "");
+  console.log("🔍 Получены initialData в форме:", initialData);
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [rating, setRating] = useState("3");
+  const [location, setLocation] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    if (initialData) {
+      console.log("✏️ Обновляем данные в форме:", initialData);
+      setName(initialData.name || "");
+      setDescription(initialData.description || "");
+      setRating(initialData.rating?.toString() || "3");
+      setLocation(initialData.location || "");
+      setLatitude(initialData.latitude?.toString() || "");
+      setLongitude(initialData.longitude?.toString() || "");
+      setImageUrl(initialData.imageUrl || "");
+    }
+  }, [initialData]);
 
   const handleSubmit = () => {
     onSubmit({

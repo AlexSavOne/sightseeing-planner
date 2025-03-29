@@ -62,6 +62,7 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
   };
 
   const handleEdit = (attraction: Attraction) => {
+    console.log("Редактируемая достопримечательность:", attraction);
     setEditingAttraction(attraction);
     setIsFormOpen(true);
   };
@@ -93,15 +94,30 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
   const handleSubmit = (
     newAttraction: Omit<Attraction, "id" | "dateAdded">
   ) => {
-    const attraction: Attraction = {
-      ...newAttraction,
-      id: uuidv4(),
-      dateAdded: new Date().toISOString().split("T")[0],
-      status: "в планах",
-    };
-    setData((prevData) => [...prevData, attraction]);
+    if (editingAttraction) {
+      console.log("Обновляем достопримечательность:", newAttraction);
+      setData((prevData) =>
+        prevData.map((item) =>
+          item.id === editingAttraction.id
+            ? { ...item, ...newAttraction }
+            : item
+        )
+      );
+    } else {
+      console.log("Добавляем новую достопримечательность:", newAttraction);
+      const attraction: Attraction = {
+        ...newAttraction,
+        id: uuidv4(),
+        dateAdded: new Date().toISOString().split("T")[0],
+        status: "в планах",
+      };
+      setData((prevData) => [...prevData, attraction]);
+    }
     setIsFormOpen(false);
+    setEditingAttraction(null);
   };
+
+  console.log("Текущее состояние editingAttraction:", editingAttraction);
 
   const columns = [
     {
@@ -199,7 +215,10 @@ const Attractions = ({ isAdmin }: AttractionsProps) => {
 
       <AttractionForm
         open={isFormOpen}
-        onClose={() => setIsFormOpen(false)}
+        onClose={() => {
+          setIsFormOpen(false);
+          setEditingAttraction(null);
+        }}
         onSubmit={handleSubmit}
         initialData={editingAttraction || undefined}
       />

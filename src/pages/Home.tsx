@@ -9,7 +9,7 @@ type HomeProps = {
 const Home = ({ isAdmin }: HomeProps) => {
   return (
     <div>
-      <h1>Главная страница</h1>
+      <h1>Список достопримечательностей</h1>
       {isAdmin ? <p>Режим администратора включён</p> : <p>Обычный режим</p>}
       <Attractions isAdmin={isAdmin} />
     </div>
