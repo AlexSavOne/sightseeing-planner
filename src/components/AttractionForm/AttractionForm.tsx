@@ -18,8 +18,6 @@ export const AttractionForm = ({
   onSubmit,
   initialData,
 }: AttractionFormProps) => {
-  console.log("🔍 Получены initialData в форме:", initialData);
-
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [rating, setRating] = useState("3");
@@ -30,7 +28,6 @@ export const AttractionForm = ({
 
   useEffect(() => {
     if (initialData) {
-      console.log("✏️ Обновляем данные в форме:", initialData);
       setName(initialData.name || "");
       setDescription(initialData.description || "");
       setRating(initialData.rating?.toString() || "3");
