@@ -1,6 +1,6 @@
 // src/utils/localStorage.ts
 
-import { Attraction } from "../components/Attraciton/Attractions";
+import { Attraction } from "../components/Attraction/Attractions";
 
 export const getAttractionsFromLocalStorage = (): Attraction[] => {
   const data = localStorage.getItem("attractions");

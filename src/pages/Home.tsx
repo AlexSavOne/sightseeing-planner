@@ -1,6 +1,6 @@
 // src/pages/Home.tsx
 
-import Attractions from "../components/Attraciton/Attractions";
+import Attractions from "../components/Attraction/Attractions";
 
 type HomeProps = {
   isAdmin: boolean;

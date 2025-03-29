@@ -1,0 +1,19 @@
+/* src/components/AttractionTable/AttractionTable.module.css */
+
+.imageWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.actions {
+  display: flex;
+  gap: 4px;
+}

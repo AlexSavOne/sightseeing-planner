@@ -1,0 +1,10 @@
+/* src/components/SearchBar/SearchBar.module.css */
+
+.searchContainer {
+  margin-bottom: 16px;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 400px;
+}

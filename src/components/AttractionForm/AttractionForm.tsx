@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button, Modal, Select, TextArea, TextInput } from "@gravity-ui/uikit";
-import { Attraction } from "../Attraciton/Attractions";
+import { Attraction } from "../Attraction/Attractions";
 import styles from "./AttractionForm.module.css";
 
 type AttractionFormProps = {

@@ -1,0 +1,6 @@
+/* src/components/AttractionActions/AttractionActions.module.css */
+
+.actionsContainer {
+  display: flex;
+  gap: 4px;
+}

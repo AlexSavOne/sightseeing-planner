@@ -1,0 +1,51 @@
+/* src/components/Attraction/Attractions.module.css */
+
+.statsContainer {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.card {
+  flex: 1;
+  padding: 16px;
+  text-align: center;
+}
+
+.statLabel {
+  font-size: 14px;
+  color: var(--g-color-text-secondary);
+  margin-bottom: 4px;
+}
+
+.statValue {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.filtersContainer {
+  margin-bottom: 20px;
+}
+
+.searchContainer {
+  margin-bottom: 16px;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 400px;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.addButton {
+  margin-right: auto;
+}
+
+.hideVisitedButton {
+  margin-left: auto;
+}
