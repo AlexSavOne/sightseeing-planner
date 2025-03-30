@@ -1,22 +1,14 @@
 /* src\index.css */
 
 :root {
-  --primary-color: #a8dadc;
-  /* Пастельно-бирюзовый */
+  --primary-color: #4ea1a4;
   --secondary-color: #f1faee;
-  /* Мягкий белый */
   --accent-color: #e63946;
-  /* Пастельно-красный */
   --text-color: #1d3557;
-  /* Тёмно-синий для текста */
   --background-color: #f8f9fa;
-  /* Светло-серый фон */
   --button-bg: #457b9d;
-  /* Пастельно-синий для кнопок */
   --button-hover-bg: #1d3557;
-  /* Тёмно-синий при наведении */
   --input-border: #ced4da;
-  /* Светло-серый для границ инпутов */
 
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;

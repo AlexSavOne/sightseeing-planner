@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@gravity-ui/uikit": "^7.7.0",
+    "@gravity-ui/date-components": "^3.0.2",
+    "@gravity-ui/uikit": "^7.7.1",
     "@types/uuid": "^10.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

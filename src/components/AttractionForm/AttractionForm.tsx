@@ -20,20 +20,22 @@ export const AttractionForm = ({
 }: AttractionFormProps) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [rating, setRating] = useState("3");
+  const [rating, setRating] = useState<number>(3);
   const [location, setLocation] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [latitude, setLatitude] = useState<string | "">("");
+  const [longitude, setLongitude] = useState<string | "">("");
   const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     if (initialData) {
       setName(initialData.name || "");
       setDescription(initialData.description || "");
-      setRating(initialData.rating?.toString() || "3");
+      setRating(initialData.rating || 3);
       setLocation(initialData.location || "");
-      setLatitude(initialData.latitude?.toString() || "");
-      setLongitude(initialData.longitude?.toString() || "");
+      setLatitude(initialData.latitude ? initialData.latitude.toString() : "");
+      setLongitude(
+        initialData.longitude ? initialData.longitude.toString() : ""
+      );
       setImageUrl(initialData.imageUrl || "");
     }
   }, [initialData]);
@@ -42,7 +44,7 @@ export const AttractionForm = ({
     onSubmit({
       name,
       description,
-      rating: parseInt(rating),
+      rating,
       location,
       latitude: latitude ? parseFloat(latitude) : undefined,
       longitude: longitude ? parseFloat(longitude) : undefined,
@@ -82,8 +84,8 @@ export const AttractionForm = ({
         <div className={styles.field}>
           <div className={styles.label}>Рейтинг (1-5)</div>
           <Select
-            value={[rating]}
-            onUpdate={(vals) => setRating(vals[0])}
+            value={[rating.toString()]}
+            onUpdate={(vals) => setRating(parseInt(vals[0]))}
             options={[1, 2, 3, 4, 5].map((num) => ({
               value: num.toString(),
               content: num.toString(),

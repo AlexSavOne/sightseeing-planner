@@ -1,3 +1,5 @@
+// src\components\AttractionActions\AttractionActions.tsx
+
 import { Button } from "@gravity-ui/uikit";
 import styles from "./AttractionActions.module.css";
 

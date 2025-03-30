@@ -1,3 +1,5 @@
+// src\components\Attraction\Attractions.tsx
+
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AttractionForm } from "../AttractionForm/AttractionForm";

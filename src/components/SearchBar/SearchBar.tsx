@@ -1,3 +1,5 @@
+// src\components\SearchBar\SearchBar.tsx
+
 import { TextInput } from "@gravity-ui/uikit";
 import styles from "./SearchBar.module.css";
 
