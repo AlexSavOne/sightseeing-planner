@@ -47,3 +47,20 @@
     margin: 8px 0;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+
+  .card {
+    background-color: #444c56;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+  }
+
+  .statLabel,
+  .statValue {
+    color: #c9d1d9;
+  }
+}

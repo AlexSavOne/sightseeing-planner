@@ -16,3 +16,14 @@
     padding: 16px;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  .footer {
+    background-color: #2d333b;
+    box-shadow: 0 -2px 4px rgba(255, 255, 255, 0.1);
+  }
+
+  .footer {
+    color: #c9d1d9;
+  }
+}
