@@ -41,14 +41,17 @@
 
 .footer {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .errorMessage {
   color: #d9534f;
   font-size: 14px;
   font-weight: bold;
-  padding-left: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
 }

@@ -134,7 +134,7 @@ select {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: #1d1f21;
+    --background-color: #333c46;
     --text-color: #c9d1d9;
     --button-bg: #2d333b;
     --button-hover-bg: #444c56;
