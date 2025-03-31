@@ -7,14 +7,7 @@ const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   return (
-    <>
-      <button onClick={() => setIsAdmin(!isAdmin)}>
-        {isAdmin
-          ? "Выключить режим администратора"
-          : "Включить режим администратора"}
-      </button>
-      <Home isAdmin={isAdmin} />
-    </>
+    <Home isAdmin={isAdmin} toggleAdmin={() => setIsAdmin((prev) => !prev)} />
   );
 };
 

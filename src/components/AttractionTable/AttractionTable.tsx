@@ -29,7 +29,7 @@ const AttractionTable = ({
           {item.imageUrl && (
             <img className={styles.image} src={item.imageUrl} alt={item.name} />
           )}
-          {item.name}
+          <span className={styles.attractionName}>{item.name}</span>
         </div>
       ),
     },
@@ -45,6 +45,7 @@ const AttractionTable = ({
             href={generateMapLink(item.latitude, item.longitude)}
             target="_blank"
             rel="noopener noreferrer"
+            className={styles.mapLink}
           >
             {item.location}
           </a>
@@ -60,6 +61,7 @@ const AttractionTable = ({
           view={item.status === "осмотрена" ? "outlined-success" : "outlined"}
           onClick={() => toggleStatus(item.id)}
           size="s"
+          className={styles.statusButton}
         >
           {item.status}
         </Button>
@@ -72,13 +74,19 @@ const AttractionTable = ({
             name: "Действия",
             template: (item: Attraction) => (
               <div className={styles.actions}>
-                <Button size="s" view="action" onClick={() => handleEdit(item)}>
+                <Button
+                  size="s"
+                  view="action"
+                  onClick={() => handleEdit(item)}
+                  className={styles.actionButton}
+                >
                   ✏️
                 </Button>
                 <Button
                   size="s"
                   view="outlined-danger"
                   onClick={() => handleDelete(item.id)}
+                  className={styles.deleteButton}
                 >
                   🗑
                 </Button>
@@ -89,7 +97,7 @@ const AttractionTable = ({
       : []),
   ];
 
-  return <Table data={data} columns={columns} />;
+  return <Table data={data} columns={columns} className={styles.table} />;
 };
 
 export default AttractionTable;

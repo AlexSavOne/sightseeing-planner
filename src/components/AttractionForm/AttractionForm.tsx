@@ -40,6 +40,16 @@ export const AttractionForm = ({
     }
   }, [initialData]);
 
+  const resetForm = () => {
+    setName("");
+    setDescription("");
+    setRating(3);
+    setLocation("");
+    setLatitude("");
+    setLongitude("");
+    setImageUrl("");
+  };
+
   const handleSubmit = () => {
     onSubmit({
       name,
@@ -51,10 +61,21 @@ export const AttractionForm = ({
       imageUrl: imageUrl || undefined,
       status: initialData?.status || "в планах",
     });
+
+    resetForm();
   };
 
   return (
-    <Modal open={open} onClose={onClose} contentOverflow="visible">
+    <Modal
+      open={open}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) {
+          resetForm();
+          onClose();
+        }
+      }}
+      contentOverflow="visible"
+    >
       <div className={styles.modalContent}>
         <h2 className={styles.title}>
           {initialData?.id ? "Редактировать" : "Добавить"} достопримечательность
