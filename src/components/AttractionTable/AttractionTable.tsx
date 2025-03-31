@@ -4,6 +4,7 @@ import { Table, Button } from "@gravity-ui/uikit";
 import { Attraction } from "../Attraction/Attractions";
 import { generateMapLink } from "../../utils/mapLinks";
 import styles from "./AttractionTable.module.css";
+import { useState } from "react";
 
 type AttractionTableProps = {
   data: Attraction[];
@@ -20,6 +21,16 @@ const AttractionTable = ({
   handleEdit,
   handleDelete,
 }: AttractionTableProps) => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const openImageModal = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+  };
+
+  const closeImageModal = () => {
+    setSelectedImage(null);
+  };
+
   const columns = [
     {
       id: "name",
@@ -27,7 +38,12 @@ const AttractionTable = ({
       template: (item: Attraction) => (
         <div className={styles.imageWrapper}>
           {item.imageUrl && (
-            <img className={styles.image} src={item.imageUrl} alt={item.name} />
+            <img
+              className={styles.image}
+              src={item.imageUrl}
+              alt={item.name}
+              onClick={() => openImageModal(item.imageUrl ?? "")}
+            />
           )}
           <span className={styles.attractionName}>{item.name}</span>
         </div>
@@ -88,7 +104,7 @@ const AttractionTable = ({
                   onClick={() => handleDelete(item.id)}
                   className={styles.deleteButton}
                 >
-                  🗑
+                  🗑️
                 </Button>
               </div>
             ),
@@ -97,7 +113,25 @@ const AttractionTable = ({
       : []),
   ];
 
-  return <Table data={data} columns={columns} className={styles.table} />;
+  return (
+    <div>
+      {data.length === 0 ? (
+        <div className={styles.noData}>Нет достопримечательностей</div>
+      ) : (
+        <Table data={data} columns={columns} className={styles.table} />
+      )}
+
+      {selectedImage && (
+        <div className={styles.modal} onClick={closeImageModal}>
+          <img
+            className={styles.modalImage}
+            src={selectedImage}
+            alt="Enlarged"
+          />
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default AttractionTable;

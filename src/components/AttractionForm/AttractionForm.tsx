@@ -26,6 +26,9 @@ export const AttractionForm = ({
   const [longitude, setLongitude] = useState<string | "">("");
   const [imageUrl, setImageUrl] = useState("");
 
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [formIncomplete, setFormIncomplete] = useState(false);
+
   useEffect(() => {
     if (initialData) {
       setName(initialData.name || "");
@@ -48,9 +51,26 @@ export const AttractionForm = ({
     setLatitude("");
     setLongitude("");
     setImageUrl("");
+    setErrors({});
+    setFormIncomplete(false);
   };
 
   const handleSubmit = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!name) newErrors.name = "Название обязательно";
+    if (!description) newErrors.description = "Описание обязательно";
+    if (!location) newErrors.location = "Местоположение обязательно";
+    if (!latitude || !longitude) {
+      newErrors.coordinates = "Широта и долгота обязательны";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setFormIncomplete(true);
+      return;
+    }
+
     onSubmit({
       name,
       description,
@@ -89,6 +109,7 @@ export const AttractionForm = ({
             placeholder="Введите название"
             className={styles.input}
           />
+          {errors.name && <div className={styles.error}>{errors.name}</div>}
         </div>
 
         <div className={styles.field}>
@@ -100,6 +121,9 @@ export const AttractionForm = ({
             placeholder="Введите описание"
             className={styles.input}
           />
+          {errors.description && (
+            <div className={styles.error}>{errors.description}</div>
+          )}
         </div>
 
         <div className={styles.field}>
@@ -123,6 +147,9 @@ export const AttractionForm = ({
             placeholder="Город, страна"
             className={styles.input}
           />
+          {errors.location && (
+            <div className={styles.error}>{errors.location}</div>
+          )}
         </div>
 
         <div className={styles.field}>
@@ -145,6 +172,9 @@ export const AttractionForm = ({
             type="number"
             className={styles.input}
           />
+          {errors.coordinates && (
+            <div className={styles.error}>{errors.coordinates}</div>
+          )}
         </div>
 
         <div className={styles.field}>
@@ -167,9 +197,19 @@ export const AttractionForm = ({
           )}
         </div>
 
-        <Button view="action" onClick={handleSubmit} className={styles.button}>
-          {initialData?.id ? "Сохранить изменения" : "Добавить"}
-        </Button>
+        <div className={styles.footer}>
+          <Button
+            view="action"
+            onClick={handleSubmit}
+            className={styles.button}
+          >
+            {initialData?.id ? "Сохранить изменения" : "Добавить"}
+          </Button>
+
+          {formIncomplete && (
+            <div className={styles.errorMessage}>Заполните форму</div>
+          )}
+        </div>
       </div>
     </Modal>
   );

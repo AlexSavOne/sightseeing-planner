@@ -1,9 +1,54 @@
 /* src/components/AttractionTable/AttractionTable.module.css */
+.table {
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+  padding: 16px;
+}
+
+:global(.g-table) {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow-x: auto;
+  transition: max-width 0.3s ease-in-out;
+  padding: 16px;
+}
+
+:global(.g-table__table) {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: fixed;
+  background-color: var(--background-color, #fff);
+  transition: background-color 0.3s ease-in-out;
+  border-bottom: 2px solid #ddd;
+}
+
+:global(.g-table__cell) {
+  padding: 16px;
+  border: 1px solid #ddd;
+  text-align: left;
+  word-break: break-word;
+  transition: background-color 0.3s ease-in-out, padding 0.2s ease-in-out;
+}
+
+:global(.g-table__row) {
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
 
 .imageWrapper {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 12px;
 }
 
 .image {
@@ -12,9 +57,92 @@
   object-fit: cover;
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.image:hover {
+  transform: scale(1.1);
 }
 
 .actions {
   display: flex;
   gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 12px;
+}
+
+.actions button {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.actions button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalImage {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.noData {
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+  padding: 20px 0;
+}
+
+@media (max-width: 1024px) {
+  :global(.g-table) {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  :global(.g-table) {
+    overflow-x: auto;
+  }
+
+  :global(.g-table__table) {
+    width: 100%;
+    min-width: 600px;
+  }
+
+  .imageWrapper,
+  .actions {
+    justify-content: center;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

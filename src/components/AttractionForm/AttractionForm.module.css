@@ -32,3 +32,23 @@
   margin-top: 8px;
   border-radius: 4px;
 }
+
+.error {
+  color: #d9534f;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.errorMessage {
+  color: #d9534f;
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 10px;
+}

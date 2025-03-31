@@ -2,11 +2,38 @@
 
 .searchContainer {
   margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
 }
 
 .searchInput {
   width: 100%;
-  max-width: 400px;
-  padding: 10px;
+  max-width: 500px;
+  padding: 12px;
   font-size: 1em;
+  transition: all 0.3s ease-in-out;
+}
+
+.searchInput:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .searchInput {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchContainer {
+    margin-bottom: 12px;
+  }
+
+  .searchInput {
+    padding: 10px;
+    font-size: 0.9em;
+  }
 }

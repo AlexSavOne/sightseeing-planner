@@ -1,6 +1,8 @@
-import { Button } from "@gravity-ui/uikit";
+// src\pages\Home.tsx
+
 import Attractions from "../components/Attraction/Attractions";
-import styles from "./Home.module.css";
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 
 type HomeProps = {
   isAdmin: boolean;
@@ -9,18 +11,9 @@ type HomeProps = {
 
 const Home = ({ isAdmin, toggleAdmin }: HomeProps) => (
   <div>
-    <h1>Список достопримечательностей</h1>
-    <Button
-      view={isAdmin ? "outlined-danger" : "action"}
-      size="m"
-      onClick={toggleAdmin}
-      className={styles.adminButton}
-    >
-      {isAdmin
-        ? "Выключить режим администратора"
-        : "Включить режим администратора"}
-    </Button>
+    <Header isAdmin={isAdmin} toggleAdmin={toggleAdmin} />
     <Attractions isAdmin={isAdmin} />
+    <Footer />
   </div>
 );
 
