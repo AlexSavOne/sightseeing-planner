@@ -24,11 +24,12 @@ export const AttractionForm = ({
   const [location, setLocation] = useState("");
   const [latitude, setLatitude] = useState<string | "">("");
   const [longitude, setLongitude] = useState<string | "">("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(""); 
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [formIncomplete, setFormIncomplete] = useState(false);
+  const [formIncomplete, setFormIncomplete] = useState(false)
 
+  // Загружаем начальные данные в форму (если они есть)
   useEffect(() => {
     if (initialData) {
       setName(initialData.name || "");
@@ -43,6 +44,7 @@ export const AttractionForm = ({
     }
   }, [initialData]);
 
+  // Функция для сброса формы
   const resetForm = () => {
     setName("");
     setDescription("");
@@ -55,9 +57,11 @@ export const AttractionForm = ({
     setFormIncomplete(false);
   };
 
+  // Обработчик отправки формы
   const handleSubmit = () => {
     const newErrors: { [key: string]: string } = {};
 
+    // Проверка обязательных полей
     if (!name) newErrors.name = "Название обязательно";
     if (!description) newErrors.description = "Описание обязательно";
     if (!location) newErrors.location = "Местоположение обязательно";
@@ -65,12 +69,14 @@ export const AttractionForm = ({
       newErrors.coordinates = "Широта и долгота обязательны";
     }
 
+    // Если есть ошибки, выводим их и не отправляем данные
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       setFormIncomplete(true);
       return;
     }
 
+    // Отправляем данные на обработку
     onSubmit({
       name,
       description,
@@ -79,9 +85,10 @@ export const AttractionForm = ({
       latitude: latitude ? parseFloat(latitude) : undefined,
       longitude: longitude ? parseFloat(longitude) : undefined,
       imageUrl: imageUrl || undefined,
-      status: initialData?.status || "в планах",
+      status: initialData?.status || "в планах", // Устанавливаем статус по умолчанию или из initialData
     });
 
+    // После отправки формы сбрасываем её
     resetForm();
   };
 
@@ -89,6 +96,7 @@ export const AttractionForm = ({
     <Modal
       open={open}
       onOpenChange={(isOpen) => {
+        // Если форма закрыта, сбрасываем все данные и закрываем её
         if (!isOpen) {
           resetForm();
           onClose();
@@ -101,6 +109,7 @@ export const AttractionForm = ({
           {initialData?.id ? "Редактировать" : "Добавить"} достопримечательность
         </h2>
 
+        {/* Поле для названия */}
         <div className={styles.field}>
           <div className={styles.label}>Название</div>
           <TextInput
@@ -112,6 +121,7 @@ export const AttractionForm = ({
           {errors.name && <div className={styles.error}>{errors.name}</div>}
         </div>
 
+        {/* Поле для описания */}
         <div className={styles.field}>
           <div className={styles.label}>Описание</div>
           <TextArea
@@ -126,6 +136,7 @@ export const AttractionForm = ({
           )}
         </div>
 
+        {/* Поле для рейтинга */}
         <div className={styles.field}>
           <div className={styles.label}>Рейтинг (1-5)</div>
           <Select
@@ -139,6 +150,7 @@ export const AttractionForm = ({
           />
         </div>
 
+        {/* Поле для местоположения */}
         <div className={styles.field}>
           <div className={styles.label}>Местоположение</div>
           <TextInput
@@ -152,6 +164,7 @@ export const AttractionForm = ({
           )}
         </div>
 
+        {/* Поле для широты */}
         <div className={styles.field}>
           <div className={styles.label}>Широта</div>
           <TextInput
@@ -163,6 +176,7 @@ export const AttractionForm = ({
           />
         </div>
 
+        {/* Поле для долготы */}
         <div className={styles.field}>
           <div className={styles.label}>Долгота</div>
           <TextInput
@@ -177,6 +191,7 @@ export const AttractionForm = ({
           )}
         </div>
 
+        {/* Поле для ссылки на изображение */}
         <div className={styles.field}>
           <div className={styles.label}>Ссылка на изображение</div>
           <TextInput
@@ -191,12 +206,13 @@ export const AttractionForm = ({
               alt="Превью"
               className={styles.imagePreview}
               onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
+                (e.target as HTMLImageElement).style.display = "none"; // Прячем изображение, если оно не загружается
               }}
             />
           )}
         </div>
 
+        {/* Кнопки для сохранения и отображение ошибок */}
         <div className={styles.footer}>
           <Button
             view="action"

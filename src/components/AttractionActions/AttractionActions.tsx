@@ -1,4 +1,4 @@
-// src\components\AttractionActions\AttractionActions.tsx
+// src/components/AttractionActions/AttractionActions.tsx
 
 import { Button, Switch } from "@gravity-ui/uikit";
 import styles from "./AttractionActions.module.css";
@@ -18,6 +18,7 @@ const AttractionActions = ({
 }: AttractionActionsProps) => {
   return (
     <div className={styles.actionsContainer}>
+      {/* Если пользователь является администратором, отображаем кнопку добавления достопримечательности */}
       {isAdmin && (
         <Button
           view="action"
@@ -29,6 +30,7 @@ const AttractionActions = ({
         </Button>
       )}
 
+      {/* Переключатель для отображения скрытых/нескрытых осмотренных достопримечательностей */}
       <Switch checked={hideVisited} onUpdate={setHideVisited}>
         {hideVisited ? "Показать осмотренные" : "Скрыть осмотренные"}
       </Switch>

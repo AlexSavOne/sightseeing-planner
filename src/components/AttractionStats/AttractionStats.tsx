@@ -14,14 +14,19 @@ type AttractionStatsProps = {
 const AttractionStats = ({ stats }: AttractionStatsProps) => {
   return (
     <div className={styles.statsContainer}>
+      {/* Карточка с общей статистикой */}
       <Card theme="normal" view="filled" className={styles.card}>
         <div className={styles.statLabel}>Всего</div>
         <div className={styles.statValue}>{stats.total}</div>
       </Card>
+
+      {/* Карточка с количеством посещённых достопримечательностей */}
       <Card theme="normal" view="filled" className={styles.card}>
         <div className={styles.statLabel}>Посещено</div>
         <div className={styles.statValue}>{stats.visited}</div>
       </Card>
+
+      {/* Карточка с количеством планируемых достопримечательностей */}
       <Card theme="normal" view="filled" className={styles.card}>
         <div className={styles.statLabel}>В планах</div>
         <div className={styles.statValue}>{stats.planned}</div>

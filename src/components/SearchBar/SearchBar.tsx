@@ -1,4 +1,4 @@
-// src\components\SearchBar\SearchBar.tsx
+// src/components/SearchBar/SearchBar.tsx
 
 import { TextInput } from "@gravity-ui/uikit";
 import styles from "./SearchBar.module.css";
@@ -11,9 +11,12 @@ type SearchBarProps = {
 const SearchBar = ({ searchQuery, setSearchQuery }: SearchBarProps) => {
   return (
     <div className={styles.searchContainer}>
+      {/* Метка для поля ввода поиска */}
       <label htmlFor="searchInput" className={styles.searchLabel}>
         Поиск по названию или описанию
       </label>
+
+      {/* Поле ввода для поиска достопримечательностей */}
       <TextInput
         id="searchInput"
         value={searchQuery}
