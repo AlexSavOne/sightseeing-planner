@@ -1,6 +1,4 @@
-// src/components/AttractionTable/AttractionTable.tsx
-
-import { Table, Button } from "@gravity-ui/uikit";
+import { Table, Button, Modal, Text } from "@gravity-ui/uikit";
 import { Attraction } from "../Attraction/Attractions";
 import { generateMapLink } from "../../utils/mapLinks";
 import styles from "./AttractionTable.module.css";
@@ -22,6 +20,8 @@ const AttractionTable = ({
   handleDelete,
 }: AttractionTableProps) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const openImageModal = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -29,6 +29,24 @@ const AttractionTable = ({
 
   const closeImageModal = () => {
     setSelectedImage(null);
+  };
+
+  const openDeleteModal = (id: string) => {
+    setConfirmDeleteId(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (confirmDeleteId) {
+      handleDelete(confirmDeleteId);
+      setConfirmDeleteId(null);
+      setIsDeleteModalOpen(false);
+    }
+  };
+
+  const cancelDelete = () => {
+    setConfirmDeleteId(null);
+    setIsDeleteModalOpen(false);
   };
 
   const columns = [
@@ -101,7 +119,7 @@ const AttractionTable = ({
                 <Button
                   size="s"
                   view="outlined-danger"
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => openDeleteModal(item.id)}
                   className={styles.deleteButton}
                 >
                   🗑️
@@ -130,6 +148,68 @@ const AttractionTable = ({
           />
         </div>
       )}
+
+      <Modal open={isDeleteModalOpen} onClose={cancelDelete}>
+        <div
+          style={{
+            padding: "32px",
+            textAlign: "center",
+            backgroundColor: "var(--g-color-base-background)",
+            borderRadius: "16px",
+            boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
+            maxWidth: "420px",
+            margin: "0 auto",
+          }}
+        >
+          <Text
+            variant="header-2"
+            style={{
+              marginBottom: "16px",
+              color: "var(--g-color-text-primary)",
+            }}
+          >
+            Удалить достопримечательность?
+          </Text>
+
+          <Text
+            style={{
+              marginBottom: "28px",
+              color: "var(--g-color-text-secondary)",
+              fontSize: "16px",
+              lineHeight: "1.5",
+            }}
+          >
+            Это действие нельзя отменить. Вы действительно хотите удалить этот
+            объект?
+          </Text>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "16px",
+              flexWrap: "wrap",
+            }}
+          >
+            <Button
+              view="outlined"
+              size="m"
+              onClick={cancelDelete}
+              style={{ minWidth: "120px", borderRadius: "8px" }}
+            >
+              Отмена
+            </Button>
+            <Button
+              view="outlined-danger"
+              size="m"
+              onClick={confirmDelete}
+              style={{ minWidth: "120px", borderRadius: "8px" }}
+            >
+              Удалить
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
